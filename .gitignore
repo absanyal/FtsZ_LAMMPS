@@ -1,0 +1,6 @@
+*
+!.gitignore
+!*.py
+!*.lammps
+log*
+!README*
