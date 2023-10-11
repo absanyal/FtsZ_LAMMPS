@@ -5,25 +5,26 @@ fname_str = 'polymer_free.data'
 system_size = 200
 bondlength = 0.1
 
-#Chain info
+# Chain info (only count polymer chain)
 n_chains = 2
 chain_offset = 10
 
-#Per chain numbers
+# Per chain numbers
 n_atoms = 50
 n_bonds = n_atoms - 1
 n_angles = n_bonds - 1
 
-#Linker numbers
-n_linkers = 200
-n_linkerchain = 1
+# Linker numbers
+n_linkers_cross = 100
+n_linkers_membrane = 100
 
-#Types
-atom_types = 3
+
+# Types
+atom_types = 4
 bond_types = 1
 angle_types = 1
 
-#Box dimensions
+# Box dimensions
 xlo, xhi = 0.0, system_size
 ylo, yhi = 0.0, system_size
 zlo, zhi = 0.0, system_size
@@ -32,7 +33,8 @@ zlo, zhi = 0.0, system_size
 mass = [
     [1, 1.0, "monomer_chain1"],
     [2, 1.0, "monomer_chain2"],
-    [3, 1.1, "linker"]
+    [3, 1.1, "linker_cross"],
+    [4, 1.1, "linker_membrane"]
 ]
 
 # ---Setup positions---
@@ -56,8 +58,6 @@ for i in range(n_atoms):
     positions.append([chain, thisatom, px, py, pz])
 
 
-
-
 chain = 2
 normalatom = 2
 for i in range(n_atoms):
@@ -66,7 +66,6 @@ for i in range(n_atoms):
     # r = np.random.uniform(0, 1)
     # if (r < frequency_linker):
     #     thisatom = 3
-    
 
     # if ((i+1) % 4 == 0):
     #     thisatom = 3
@@ -76,15 +75,22 @@ for i in range(n_atoms):
     pz = (i * bondlength) - (zhi - zlo)/2
     positions.append([chain, thisatom, px, py, pz])
 
-#Linkers
+# Linkers
 thisatom = 3
 chain = 3
-for i in range(n_linkers):
+for i in range(n_linkers_cross):
     px = np.random.uniform(xlo, xhi)
     py = np.random.uniform(ylo, yhi)
     pz = np.random.uniform(zlo, zhi)
     positions.append([chain, thisatom, px, py, pz])
 
+thisatom = 4
+chain = 4
+for i in range(n_linkers_membrane):
+    px = np.random.uniform(xlo, xhi)
+    py = np.random.uniform(ylo, yhi)
+    pz = np.random.uniform(zlo, zhi)
+    positions.append([chain, thisatom, px, py, pz])
 
 
 # ---Setup bonds----
@@ -133,7 +139,8 @@ with open(fname_str, 'w') as fname:
     fname.write("Two chains and floating linkers\n\n")
 
     # Numbers
-    fname.write('{} atoms\n'.format(n_atoms * n_chains + n_linkers))
+    fname.write('{} atoms\n'.format(n_atoms * n_chains +
+                n_linkers_membrane + n_linkers_cross))
     fname.write('{} bonds\n'.format(n_bonds * n_chains))
     fname.write('{} angles\n'.format(n_angles * n_chains))
 

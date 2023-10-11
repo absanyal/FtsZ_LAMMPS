@@ -15,3 +15,7 @@ bond_coeff (bond type) (K) (R0) 1(episilon) (sigma)
 Harmonic angle
 --------------
 angle_coeff (angle type) (Spring constant) (theta_0)
+
+fix Langevin
+------------
+fix (fix ID) (groups to fix) langevin (Temperature start) (Temperature stop) (damp) (seed)
