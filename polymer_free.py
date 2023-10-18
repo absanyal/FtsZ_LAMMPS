@@ -2,7 +2,7 @@ import numpy as np
 
 fname_str = 'polymer_free.data'
 
-system_size = 200
+# system_size = 200
 bondlength = 0.1
 
 # Chain info (only count polymer chain)
@@ -15,8 +15,8 @@ n_bonds = n_atoms - 1
 n_angles = n_bonds - 1
 
 # Linker numbers
-n_linkers_cross = 100
-n_linkers_membrane = 100
+n_linkers_cross = 200
+n_linkers_membrane = 200
 
 
 # Types
@@ -25,9 +25,9 @@ bond_types = 1
 angle_types = 1
 
 # Box dimensions
-xlo, xhi = 0.0, system_size
-ylo, yhi = 0.0, system_size
-zlo, zhi = 0.0, system_size
+xlo, xhi = 0.0, 100
+ylo, yhi = 0.0, 350
+zlo, zhi = 0.0, 350
 
 # ---Setup mass---
 mass = [
@@ -52,8 +52,8 @@ for i in range(n_atoms):
     # if ((i+1) % 4 == 0):
     #     thisatom = 3
 
-    px = system_size/2.0
-    py = system_size/2.0
+    px = (xhi - xlo)/2.0
+    py = (yhi - ylo)/2.0
     pz = (i * bondlength) - (zhi - zlo)/2
     positions.append([chain, thisatom, px, py, pz])
 
@@ -70,8 +70,8 @@ for i in range(n_atoms):
     # if ((i+1) % 4 == 0):
     #     thisatom = 3
 
-    px = system_size/2.0 + chain_offset
-    py = system_size/2.0
+    px = (xhi - xlo)/2.0 + chain_offset
+    py = (yhi - ylo)/2.0
     pz = (i * bondlength) - (zhi - zlo)/2
     positions.append([chain, thisatom, px, py, pz])
 

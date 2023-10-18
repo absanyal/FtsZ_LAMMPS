@@ -11,6 +11,11 @@ time_step = []
 total_dist_sq = 0
 total_steps = 0
 
+
+def window(size):
+    return np.ones(size)/float(size)
+
+
 for i in range(lines):
     distance = np.sqrt(
         pow(x1[i] - x2[i], 2) +
@@ -20,14 +25,16 @@ for i in range(lines):
 
     ete_distance.append(distance)
     time_step.append(i)
-    
-    if (i > 0.9 * lines):
+
+    if (i >= 0.9 * lines):
         total_dist_sq += pow(distance, 2)
         total_steps += 1
 
-rms_val = np.sqrt( total_dist_sq / total_steps )
+rms_val = np.sqrt(total_dist_sq / total_steps)
 
 print("RMS end-to-end distance =", rms_val)
 
-# plt.plot(time_step, ete_distance)
-# plt.show()
+plt.plot(time_step, ete_distance, label="Raw data")
+# plt.plot(time_step, np.convolve(ete_distance, window(50), 'same'),
+#          label="time averaged")
+plt.show()
