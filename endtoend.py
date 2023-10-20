@@ -8,6 +8,9 @@ lines = len(x1)
 ete_distance = []
 time_step = []
 
+averagingsq_list = []
+averaging_list = []
+
 total_dist_sq = 0
 total_steps = 0
 
@@ -27,12 +30,19 @@ for i in range(lines):
     time_step.append(i)
 
     if (i >= 0.9 * lines):
-        total_dist_sq += pow(distance, 2)
+        # total_dist_sq += pow(distance, 2)
+        averagingsq_list.append(pow(distance, 2))
+        averaging_list.append(distance)
         total_steps += 1
 
-rms_val = np.sqrt(total_dist_sq / total_steps)
+rms_val = np.sqrt(sum(averagingsq_list) / len(averagingsq_list))
+stddevdist = np.std(averaging_list)
 
-print("RMS end-to-end distance =", rms_val)
+rms_val = round(rms_val, 3)
+stddevdist = round(stddevdist, 3)
+
+print("RMS end-to-end distance =", rms_val, "+/-", stddevdist)
+
 
 plt.plot(time_step, ete_distance, label="Raw data")
 # plt.plot(time_step, np.convolve(ete_distance, window(50), 'same'),

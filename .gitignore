@@ -4,3 +4,4 @@
 !*.lammps
 log*
 !README*
+!*.sh
