@@ -23,28 +23,36 @@ group link_mem type 4
 
 pair_style lj/cut 5.0
 
-pair_coeff 1 1 0.1 2.5 5.0
-pair_coeff 1 2 0.1 1.0 1.0
-pair_coeff 1 3 5.0 1.0 2.0
-pair_coeff 1 4 5.0 1.0 2.0
+pair_coeff 1 1 31.0 2.5 5.0
+pair_coeff 1 2 31.0 1.0 1.0
+pair_coeff 1 3 1550.0 1.0 2.0
+pair_coeff 1 4 1550.0 1.0 2.0
 
-pair_coeff 2 2 0.1 2.5 5.0
-pair_coeff 2 3 5.0 1.0 2.0
-pair_coeff 2 4 5.0 1.0 2.0
+pair_coeff 2 2 31.0 2.5 5.0
+pair_coeff 2 3 1550.0 1.0 2.0
+pair_coeff 2 4 1550.0 1.0 2.0
 
-pair_coeff 3 3 0.1 1.0 1.0
-pair_coeff 3 4 0.1 1.0 1.0
+pair_coeff 3 3 31.0 1.0 1.0
+pair_coeff 3 4 31.0 1.0 1.0
 
-pair_coeff 4 4 0.1 1.0 1.0
+pair_coeff 4 4 31.0 1.0 1.0
 
 
-bond_style fene
-special_bonds fene
-bond_coeff 1 100.0 5.0 1.0 2.5
+# bond_style fene
+# special_bonds fene
+
+# # bond_style zero nocoeff
+
+# bond_coeff 1 100.0 5.0 1.0 2.5
+
+bond_style harmonic
+bond_coeff 1 93000.0 2.5
+
 
 angle_style harmonic
 # angle_coeff 1 300.0 180
-angle_coeff 1 300 177.5
+angle_coeff 1 93000.0 177.5
+
 neigh_modify every 1 delay 0 check yes
 
 timestep 0.001
@@ -54,15 +62,16 @@ minimize 0.0 1.0e-8 10000 10000
 # undump minimization
 
 fix 1 all nve/limit 0.01
-fix 2 all langevin 1.0 1.0 0.003 7687868
+# fix 2 all langevin 1.0 1.0 0.003 7687868
+fix 2 all langevin 310.0 310.0 0.053 7687868
 # undump minimization
 
 # fix wallall all wall/region membrane lj126 0.1 5.0 5.0
 
-fix wallchain1 chain1 wall/region membrane lj126 0.1 5.0 5.0
-fix wallchain2 chain2 wall/region membrane lj126 0.1 5.0 5.0
-fix walllinkercross link_cross wall/region membrane lj126 0.1 5.0 5.0
-fix walllinkermem link_mem wall/region membrane lj126 5.0 1.0 2.0
+fix wallchain1 chain1 wall/region membrane lj126 31.0 5.0 5.0
+fix wallchain2 chain2 wall/region membrane lj126 31.0 5.0 5.0
+fix walllinkercross link_cross wall/region membrane lj126 31.0 5.0 5.0
+fix walllinkermem link_mem wall/region membrane lj126 1550.0 1.0 2.0
 
 variable x1 equal x[1]
 variable y1 equal y[1]
@@ -72,20 +81,22 @@ variable x2 equal x[50]
 variable y2 equal y[50]
 variable z2 equal z[50]
 
-# run 10000
-run 1000000
+run 10000
+# run 1000000
 
 # thermo_style custom step elapsed temp ebond eangle etotal
 # thermo 100000
-unfix 1
+
+unfix 1 #After thermalization, remove upper limit on displacement
+
 undump minimization
 
 fix endtoend all print 1000 "${x1} ${y1} ${z1} ${x2} ${y2} ${z2}" file endtoend.txt screen no
-
+ 
 
 dump mydump all atom 1000 dump.lammpstrj
 
-fix 1 all nve
+fix 1 all nve #Collision physics on
 
 thermo_style custom step elapsed temp ebond eangle etotal
 thermo 100000
