@@ -15,7 +15,7 @@ n_bonds = n_atoms - 1
 n_angles = n_bonds - 1
 
 # Linker numbers
-n_linkers_cross = 200
+n_linkers_cross = 400
 n_linkers_membrane = 200
 
 
