@@ -1,6 +1,6 @@
 import numpy as np
 
-fname_str = 'polymer_bonded.data'
+fname_str = 'polymer_react.data'
 
 # system_size = 200
 bondlength = 0.1
@@ -17,7 +17,7 @@ n_angles = n_bonds - 1
 n_cross_bonds = 0
 
 # Linker numbers
-n_linkers_cross = 600
+n_linkers_cross = 200
 n_linkers_membrane = 200
 
 

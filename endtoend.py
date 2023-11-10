@@ -26,7 +26,7 @@ for i in range(lines):
         pow(y1[i] - y2[i], 2) +
         pow(z1[i] - z2[i], 2)
     )
-    
+
     displacement_val = np.sqrt(
         pow(x1[i] - x1[0], 2) +
         pow(y1[i] - y1[0], 2) +
@@ -59,7 +59,7 @@ plt.legend()
 plt.ylim((105, 125))
 plt.show()
 
-plt.plot(time_step, displacement)
-plt.xscale('log')
-plt.yscale('log')
-plt.show()
+# plt.plot(time_step, displacement)
+# plt.xscale('log')
+# plt.yscale('log')
+# plt.show()

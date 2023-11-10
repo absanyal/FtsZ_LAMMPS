@@ -6,3 +6,5 @@ log*
 !README*
 !*.sh
 old*
+!*.template
+!*.map
