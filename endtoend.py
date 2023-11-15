@@ -57,7 +57,7 @@ plt.plot(time_step, np.convolve(ete_distance, window(100), 'same'),
          lw='2.5', color='red', label="Smooth line")
 plt.legend()
 plt.ylim((105, 125))
-plt.show()
+# plt.show()
 
 # plt.plot(time_step, displacement)
 # plt.xscale('log')
